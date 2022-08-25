@@ -10,6 +10,7 @@ import HANDLER_STORAGE from "../constant/app.constant";
 import {getTodos, setTodos} from "../services/Todos";
 import { useDispatch, useSelector } from "react-redux";
 import { addTodo, setTodo } from "../features/todoSlice";
+import TabBar from "../components/tabBar";
 
 const Layout = () => {
     const [value, setValue] = React.useState(0);
@@ -110,29 +111,7 @@ const Layout = () => {
                                 </div>
                             </form>
                         </div>
-
-                        <Box sx={{width: "100%"}}>
-                            <Box sx={{borderBottom: 1, borderColor: "divider"}}>
-                                <Tabs
-                                    value={value}
-                                    onChange={handleChange}
-                                    aria-label="basic tabs example"
-                                >
-                                    <Tab label="Tout" {...a11yProps(0)} />
-                                    <Tab label="Actif" {...a11yProps(1)} />
-                                    <Tab label="Termine" {...a11yProps(2)} />
-                                </Tabs>
-                            </Box>
-                            <TabPanel value={value} index={0}>
-                                {Tout()}
-                            </TabPanel>
-                            <TabPanel value={value} index={1}>
-                                Item Two
-                            </TabPanel>
-                            <TabPanel value={value} index={2}>
-                                Item Three
-                            </TabPanel>
-                        </Box>
+                        <TabBar />
                     </div>
                 </div>
             </div>

@@ -1,10 +1,10 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import Layout from "../layouts";
+import Actif from "../pages/Actif";
 import Tout from "../pages/Tout";
-// import Actif from "../pages/Actif";
-// import Termine from "../pages/Termine";
-// import Tout from "../components/Addtask/TabBar";
+import Termine from "../pages/Termine";
+
 
 const TodosRoute = () => {
   return (
@@ -13,7 +13,7 @@ const TodosRoute = () => {
         <Route index element={<Tout />} />
         {/* <Route path="/" element={<Tout />} />
         <Route path="/Actif" element={<Actif />} />
-        <Route path="/Termine" element={<Termine />} /> */}
+        <Route path="/Termine" element={<Termine/>} /> */}
       </Route>
     </Routes>
   );

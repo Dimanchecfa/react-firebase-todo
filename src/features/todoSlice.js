@@ -19,12 +19,11 @@ const todoSlice = createSlice({
             localStorage.setItem("todos", JSON.stringify(state.todos));
         },
         getActiveTodos: (state , {payload}) => {
-            state.todos = state.todos.filter(item => item?.completed !== payload.false);
+            state.todos = state.todos?.filter(item => item?.completed === false);
 
         },
         getFinishedTodos: (state , {payload}) => {
-            state.todos = state.todos.filter(item => item?.completed !== payload.true);
-
+            state.todos = state.todos?.filter(item => item?.completed ===  true);
         }
 
 
@@ -32,5 +31,5 @@ const todoSlice = createSlice({
 
 });
 
-export const { setTodo, addTodo, deleteTodos } = todoSlice.actions;
+export const { setTodo, addTodo, deleteTodos , getActiveTodos } = todoSlice.actions;
 export default todoSlice.reducer;
