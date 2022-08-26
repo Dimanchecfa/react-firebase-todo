@@ -11,9 +11,8 @@ import Swal from "sweetalert2";
 import { deleteTodos, handleToogle } from "../../redux/slices/todoSlice";
 import { db } from "../../utils/firebase.config";
 
-export default function Actif(todoFinished) {
+const Actif = (todoActive) => {
   const dispatch = useDispatch();
-
   const deleteTodo = async (todoId) => {
     await Swal.fire({
       title: "Etes-vous sûr?",
@@ -36,10 +35,11 @@ export default function Actif(todoFinished) {
       }
     });
   };
+
   const handleToogles = async (todoId) => {
     console.log(todoId);
     await updateDoc(doc(db, "todos", todoId), {
-      completed: !todoFinished.completed,
+      completed: !todoActive.completed,
     })
       .then(() => {
         dispatch(handleToogle(todoId));
@@ -51,7 +51,7 @@ export default function Actif(todoFinished) {
 
   return (
     <List sx={{ width: "100%", maxWidth: 800, bgcolor: "background.paper" }}>
-      {todoFinished?.map((item, index) => {
+      {todoActive?.map((item, index) => {
         return (
           <>
             <ListItem key={index}>
@@ -84,4 +84,5 @@ export default function Actif(todoFinished) {
       })}
     </List>
   );
-}
+};
+export default Actif;
