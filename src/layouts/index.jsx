@@ -1,48 +1,20 @@
-import {Box, Tab, Tabs, TextField} from "@mui/material";
-import React, {useEffect} from "react";
+import {Box , TextField} from "@mui/material";
+import React from "react";
 import {Button} from "@mui/material";
-import TabPanel from "../components/tabBar/tab";
-import Tout from "../pages/Tout";
-import  Swal from 'sweetalert2';
-import {useForm} from "react-hook-form";
-import a11yProps from "../components/tabBar/a11yProps";
-import HANDLER_STORAGE from "../constant/app.constant";
-import {getTodos, setTodos} from "../services/Todos";
-import { useDispatch, useSelector } from "react-redux";
-import { addTodo, setTodo } from "../features/todoSlice";
+import { useDispatch,} from "react-redux";
+import { addTodo, setTodo ,} from "../features/todoSlice";
 import TabBar from "../components/tabBar";
 
 const Layout = () => {
-    const [value, setValue] = React.useState(0);
     const dispatch = useDispatch();
     
 
-    const handleChange = (SyntheticEvent, newValue) => {
-        setValue(newValue);
-    };
 
-    const [checked, setChecked] = React.useState(["wifi"]);
-
-    const handleToggle = (value) => () => {
-        const currentIndex = checked.indexOf(value);
-        const newChecked = [...checked];
-
-        if (currentIndex === -1) {
-            newChecked.push(value);
-
-        } else {
-            newChecked.splice(currentIndex, 1);
-        }
-
-        setChecked(newChecked);
-    };
+  
     const [title, setTitle] = React.useState("");
     const [completed, setCompleted] = React.useState(false);
-    const [todos, setTodos] = React.useState([
+    const [todos, setTodos] = React.useState([]);
 
-    ]);
-
-    const [dataString, setDataString] = React.useState([]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -59,22 +31,12 @@ const Layout = () => {
             //add todo to redux
             dispatch(addTodo(localTodos));
             dispatch(setTodo(localTodos));
-
-            setDataString(JSON.parse(localStorage.getItem("todos")));
             setTitle("");
 
 
 
         }
     };
-
-    useEffect( () =>  {
-
-    
-
-        
-    }, []);
-    
 
 
     return (

@@ -7,29 +7,28 @@ import {Button, Divider, IconButton} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 import Swal from "sweetalert2";
-import { useDispatch, useSelector } from "react-redux";
-import { addTodo, deleteTodos, setTodo } from "../../features/todoSlice";
-import { get } from "react-hook-form";
+import { useDispatch,} from "react-redux";
+import {  deleteTodos, setTodo , handleToogle} from "../../features/todoSlice";
 
 
-export default function Tout(localTodos) {
-    const [checked, setChecked] = React.useState([0]);
+export default function Tout(todoData) {
+    // const [checked, setChecked] = React.useState([0]);
 
-    const todoData = useSelector(state => state?.todos?.todos);
+   
     const dispatch = useDispatch();
 
-    const handleToggle = (value) => () => {
-        const currentIndex = checked.indexOf(value);
-        const newChecked = [...checked];
+    // const handleToggle = (value) => () => {
+    //     const currentIndex = checked.indexOf(value);
+    //     const newChecked = [...checked];
 
-        if (currentIndex === -1) {
-            newChecked.push(value);
-        } else {
-            newChecked.splice(currentIndex, 1);
-        }
+    //     if (currentIndex === -1) {
+    //         newChecked.push(value);
+    //     } else {
+    //         newChecked.splice(currentIndex, 1);
+    //     }
 
-        setChecked(newChecked);
-    };
+    //     setChecked(newChecked);
+    // };
   
     
         
@@ -38,12 +37,11 @@ React.useEffect(() => {
     if (data) {
         dispatch(setTodo(JSON.parse(data)));
     }
-    console.log(todoData);
     
     
     
 
-} , [dispatch]);
+}, [dispatch]);
 
     const deleteTodo = async (title) => {
         const showAlert = await Swal.fire({
@@ -83,8 +81,8 @@ React.useEffect(() => {
                             </ListItemText>
                             <Switch
                                 edge="end"
-                                onChange={handleToggle(item?.title)}
-                                checked={checked.indexOf(item?.title) !== -1}
+                                onChange={() => dispatch(handleToogle(item.title))}
+                                checked={item.completed}
                                 inputProps={{
                                     "aria-labelledby": "switch-list-label-wifi",
                                 }}

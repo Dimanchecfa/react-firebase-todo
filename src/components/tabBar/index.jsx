@@ -6,17 +6,22 @@ import a11yProps from './a11yProps';
 import Tout from '../../pages/Tout';
 import { Tab, Tabs } from '@mui/material';
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 
 
   
   const TabBar = () => {
     const [value, setValue] = useState(0);
-
+const todoActive = useSelector(state => state?.todos?.todos?.filter(todo => todo.completed === false));
+    const todoFinished = useSelector(state => state?.todos?.todos?.filter(todo => todo.completed === true));
+    const todoData = useSelector(state => state?.todos?.todos);
    
     const handleChange = (SyntheticEvent, newValue) => {
         setValue(newValue);
     };
+
+    
 
 
     return (
@@ -34,13 +39,14 @@ import React, { useState } from 'react';
                                 </Tabs>
                             </Box>
                             <TabPanel value={value} index={0}>
-                                {Tout()}
+                                {Tout (todoData)}
+
                             </TabPanel>
                             <TabPanel value={value} index={1}>
-                            {Actif()}
+                                {Actif(todoActive)}
                             </TabPanel>
                             <TabPanel value={value} index={2}>
-                                Item Three
+                                {Actif(todoFinished)}
                             </TabPanel>
                         </Box>
         </>
