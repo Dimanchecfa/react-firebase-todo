@@ -1,15 +1,15 @@
 import { Tab, Tabs } from "@mui/material";
 import { Box } from "@mui/system";
+import { collection, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Actif from "../../pages/Actif";
-import Tout from "../../pages/Tout";
 import Termine from "../../pages/Termine";
+import Tout from "../../pages/Tout";
+import { getTodos } from "../../redux/slices/todoSlice";
+import { db } from "../../utils/firebase.config";
 import a11yProps from "./a11yProps";
 import TabPanel from "./tab";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../utils/firebase.config";
-import { getTodos } from "../../redux/slices/todoSlice";
 
 const TabBar = () => {
   const [value, setValue] = useState(0);
@@ -26,12 +26,20 @@ const TabBar = () => {
     setValue(newValue);
   };
 
+  useEffect(() => {
+    // getDocs(collection(db, "todos")).then((res) => {
+    //   dispatch(
+    //     getTodos(res.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+    //   );
+    // });
+    let localTodos = [];
 
-  useEffect(() => { 
-    getDocs(collection(db , "todos")).then(res => {
-      dispatch(getTodos(res.docs.map(doc =>({...doc.data(), id: doc.id}))));
-     
-    })}, []);
+    onSnapshot(collection(db, "todos"), (res) => {
+      localTodos = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+      dispatch(getTodos(localTodos));
+    });
+  }, []);
+
   return (
     <>
       <Box sx={{ width: "100%" }}>
@@ -47,7 +55,7 @@ const TabBar = () => {
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          {Tout(todoData)}
+          <Tout todoData={todoData} />
         </TabPanel>
         <TabPanel value={value} index={1}>
           {Actif(todoActive)}

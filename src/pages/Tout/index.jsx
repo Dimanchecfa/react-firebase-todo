@@ -5,17 +5,13 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Switch from "@mui/material/Switch";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
-import * as React from "react";
 
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
-import {
-  deleteTodos,
-  handleToogle,
-} from "../../redux/slices/todoSlice";
+import { deleteTodos } from "../../redux/slices/todoSlice";
 import { db } from "../../utils/firebase.config";
 
-export default function Tout(todoData) {
+export default function Tout({ todoData }) {
   const dispatch = useDispatch();
 
   const deleteTodo = async (todoId) => {
@@ -29,11 +25,9 @@ export default function Tout(todoData) {
       confirmButtonText: "Oui, supprimer!",
       cancelButtonText: "Annuler",
     }).then((result) => {
-     deleteDoc(doc(db,"todos", todoId)).then(() => {
-       dispatch(deleteTodos(todoId));
-     })
-   
-        
+      deleteDoc(doc(db, "todos", todoId)).then(() => {
+        dispatch(deleteTodos(todoId));
+      });
       if (result.value) {
         Swal.fire("Supprimé!", "Votre todo a été supprimé.", "success");
         setTimeout(() => {
@@ -43,15 +37,15 @@ export default function Tout(todoData) {
     });
   };
 
-  const handleToogle = (todoId) => {
-    updateDoc(doc(db,"todos", todoId), {
-      completed: !todoData.completed,
-    }).then(() => {
-      dispatch(handleToogle(todoId));
+  const handleToggle = async (item) => {
+    try {
+      await updateDoc(doc(db, `todos`, item.id), {
+        completed: !item.completed,
+      });
+    } catch (e) {
+      console.log(e);
     }
-    );
-
-  }
+  };
 
   return (
     <List sx={{ width: "100%", maxWidth: 800, bgcolor: "background.paper" }}>
@@ -69,7 +63,7 @@ export default function Tout(todoData) {
               </ListItemText>
               <Switch
                 edge="end"
-                onChange={() => handleToogle(item?.id)}
+                onChange={() => handleToggle(item)}
                 checked={item.completed}
                 inputProps={{
                   "aria-labelledby": "switch-list-label-wifi",

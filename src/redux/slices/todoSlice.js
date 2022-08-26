@@ -1,6 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { doc, updateDoc } from "firebase/firestore";
-import { db } from "../../utils/firebase.config";
 
 const todoSlice = createSlice({
   name: "todos",
@@ -16,20 +14,18 @@ const todoSlice = createSlice({
     },
     deleteTodos: (state, { payload }) => {
       state.todos = state.todos.filter((item) => item?.id !== payload);
-      
     },
-   
-   
-    handleToogle: (state, { payload }) => {
-      state.todos = state.todos?.map((item) => {
-        if (item.id === payload) {
-          item.completed = !item.completed;
 
-        }
-        return item;
-      });
-      localStorage.setItem("todos", JSON.stringify(state.todos));
-    },
+    // handleToogle: (state, { payload }) => {
+    //   state.todos = state.todos?.map((item) => {
+    //     if (item.id === payload) {
+    //       item.completed = !item.completed;
+    //
+    //     }
+    //     return item;
+    //   });
+    //   localStorage.setItem("todos", JSON.stringify(state.todos));
+    // },
   },
 });
 

@@ -4,7 +4,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Switch from "@mui/material/Switch";
-import { deleteDoc, doc } from "firebase/firestore";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
@@ -24,9 +24,9 @@ const Actif = (todoActive) => {
       confirmButtonText: "Oui, supprimer!",
       cancelButtonText: "Annuler",
     }).then(async (result) => {
-      deleteDoc(doc(db,"todos", todoId)).then(() => {
+      deleteDoc(doc(db, "todos", todoId)).then(() => {
         dispatch(deleteTodos(todoId));
-      })
+      });
       if (result.value) {
         Swal.fire("Supprimé!", "Votre todo a été supprimé.", "success");
         setTimeout(() => {
@@ -34,6 +34,19 @@ const Actif = (todoActive) => {
         }, 2000);
       }
     });
+  };
+
+  const handleToogles = async (todoId) => {
+    console.log(todoId);
+    await updateDoc(doc(db, "todos", todoId), {
+      completed: !todoActive.completed,
+    })
+      .then(() => {
+        dispatch(handleToogle(todoId));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   return (
@@ -52,7 +65,7 @@ const Actif = (todoActive) => {
               </ListItemText>
               <Switch
                 edge="end"
-                onChange={() => dispatch(handleToogle(item.title))}
+                onChange={() => handleToogles(item?.id)}
                 checked={item.completed}
                 inputProps={{
                   "aria-labelledby": "switch-list-label-wifi",
@@ -60,7 +73,7 @@ const Actif = (todoActive) => {
               />
               <IconButton
                 aria-label="delete"
-                onClick={() => deleteTodo(item?.title)}
+                onClick={() => deleteTodo(item?.id)}
               >
                 <DeleteIcon />
               </IconButton>
