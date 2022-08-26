@@ -2,7 +2,7 @@ import {Box , TextField} from "@mui/material";
 import React from "react";
 import {Button} from "@mui/material";
 import { useDispatch,} from "react-redux";
-import { addTodo, setTodo ,} from "../features/todoSlice";
+import { addTodo, setTodo ,} from "../redux/slices/todoSlice";
 import TabBar from "../components/tabBar";
 
 const Layout = () => {

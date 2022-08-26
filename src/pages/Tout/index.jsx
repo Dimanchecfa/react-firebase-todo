@@ -8,7 +8,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 import Swal from "sweetalert2";
 import { useDispatch,} from "react-redux";
-import {  deleteTodos, setTodo , handleToogle} from "../../features/todoSlice";
+import {  deleteTodos, setTodo , handleToogle} from "../../redux/slices/todoSlice";
 
 
 export default function Tout(todoData) {
