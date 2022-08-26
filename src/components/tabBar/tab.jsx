@@ -1,9 +1,5 @@
-import * as React from 'react';
-
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-
-
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 
 function TabPanel(TabPanelProps) {
   const { children, value, index, ...other } = TabPanelProps;
@@ -24,4 +20,5 @@ function TabPanel(TabPanelProps) {
     </div>
   );
 }
+
 export default TabPanel;

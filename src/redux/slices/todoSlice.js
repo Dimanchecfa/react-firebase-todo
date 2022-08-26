@@ -1,44 +1,38 @@
-import { createSlice } from '@reduxjs/toolkit';
-
+import { createSlice } from "@reduxjs/toolkit";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../../utils/firebase.config";
 
 const todoSlice = createSlice({
-    name: 'todo',
-    initialState: {
-        todos: null,
+  name: "todos",
+  initialState: {
+    todos: null,
+  },
+  reducers: {
+    getTodos: (state, { payload }) => {
+      state.todos = payload;
     },
-    reducers: {
+    addTodo: (state, { payload }) => {
+      state.todos?.push(payload);
+    },
+    deleteTodos: (state, { payload }) => {
+      state.todos = state.todos.filter((item) => item?.id !== payload);
+      
+    },
+   
+   
+    handleToogle: (state, { payload }) => {
+      state.todos = state.todos?.map((item) => {
+        if (item.id === payload) {
+          item.completed = !item.completed;
 
-        setTodo: (state, {payload}) => {
-            state.todos = payload;
-        },
-        addTodo: (state, {payload}) => {
-            state.todos?.push(payload);
-        },
-        deleteTodos: (state, {payload}) => {
-            state.todos = state.todos.filter(item => item?.title !== payload);
-            localStorage.setItem("todos", JSON.stringify(state.todos));
-        },
-        getActiveTodos: (state , {payload}) => {
-            state.todos = state.todos?.filter(item => item?.completed === false);
-
-        },
-        getFinishedTodos: (state , {payload}) => {
-            state.todos = state.todos?.filter(item => item?.completed ===  true);
-        },
-        handleToogle: (state, {payload}) => {
-            state.todos = state.todos.map(item => {
-                if (item.title === payload) {
-                    item.completed = !item.completed;
-                }
-                return item;
-            } );
-            localStorage.setItem("todos", JSON.stringify(state.todos));
         }
-
-
-    }
-
+        return item;
+      });
+      localStorage.setItem("todos", JSON.stringify(state.todos));
+    },
+  },
 });
 
-export const { setTodo, addTodo, deleteTodos , getActiveTodos , handleToogle} = todoSlice.actions;
+export const { getTodos, addTodo, deleteTodos, getActiveTodos, handleToogle } =
+  todoSlice.actions;
 export default todoSlice.reducer;
