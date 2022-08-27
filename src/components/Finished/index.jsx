@@ -6,13 +6,14 @@ import ListItemText from "@mui/material/ListItemText";
 import Switch from "@mui/material/Switch";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
-import { deleteTodos, handleToogle } from "../../redux/slices/todoSlice";
+import { deleteTodos} from "../../redux/slices/todoSlice";
 import { db } from "../../utils/firebase.config";
 
-export default function Actif(todoFinished) {
+export default function Finished() {
   const dispatch = useDispatch();
+  const todoFinished = useSelector((state) => state.todos?.todos.filter((todo) => todo.completed === true));
 
   const deleteTodo = async (todoId) => {
     await Swal.fire({
@@ -36,17 +37,14 @@ export default function Actif(todoFinished) {
       }
     });
   };
-  const handleToogles = async (todoId) => {
-    console.log(todoId);
-    await updateDoc(doc(db, "todos", todoId), {
-      completed: !todoFinished.completed,
-    })
-      .then(() => {
-        dispatch(handleToogle(todoId));
-      })
-      .catch((error) => {
-        console.log(error);
+  const handleToggle = async (item) => {
+    try {
+      await updateDoc(doc(db, `todos`, item.id), {
+        completed: !item.completed,
       });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -65,7 +63,7 @@ export default function Actif(todoFinished) {
               </ListItemText>
               <Switch
                 edge="end"
-                onChange={() => handleToogles(item?.id)}
+                onChange={() => handleToggle(item)}
                 checked={item.completed}
                 inputProps={{
                   "aria-labelledby": "switch-list-label-wifi",
