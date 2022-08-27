@@ -12,6 +12,7 @@ import { db } from "../../utils/firebase.config";
 
 const Layout = () => {
   const [value, setValue] = useState(0);
+  const [loading , setLoading] = useState(true);
   const dispatch = useDispatch();
   const [title , setTitle] = useState();
   const [completed, setCompleted] = useState(false);
@@ -25,8 +26,9 @@ const Layout = () => {
           title,
           completed,
         };
-        await addDoc(collection(db, "todos"), data);
         setTitle("");
+        await addDoc(collection(db, "todos"), data);
+       
         setErrorForm(false);
       } else {
         setErrorForm(true);
@@ -47,6 +49,7 @@ const Layout = () => {
     onSnapshot(collection(db, "todos"), (res) => {
       localTodos = res.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
       dispatch(getTodos(localTodos));
+      setLoading(false);
     });
   }, []);
 
@@ -58,7 +61,7 @@ const Layout = () => {
             <div className="mb-4">
               <h1 className="text-xl">Mes taches</h1>
               <form className="flex flex-col" onSubmit={handleSubmit} id="form">
-                <div className="flex mt-4 justify-around ">
+                <div className="flex mt-4 justify-evenly ">
                   <Box
                     sx={{
                       width: 650,
@@ -101,7 +104,13 @@ const Layout = () => {
                 </Tabs>
               </Box>
               <TabPanel value={value} index={0}>
-                <All />
+                {loading ? (
+                  <div class="flex justify-center items-center">
+                  <div class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full m-12" role="status">
+                    <span class="visually-hidden"></span>
+                  </div>
+                </div> ) : (
+                  <All />)}
               </TabPanel>
               <TabPanel value={value} index={1}>
                 {/* {Actif(todoActive)} */}
