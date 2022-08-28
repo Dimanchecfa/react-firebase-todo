@@ -6,13 +6,16 @@ import ListItemText from "@mui/material/ListItemText";
 import Switch from "@mui/material/Switch";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
-import { deleteTodos, handleToogle } from "../../redux/slices/todoSlice";
+import { deleteTodos} from "../../redux/slices/todoSlice";
 import { db } from "../../utils/firebase.config";
 
-const Actif = (todoActive) => {
+const Active = () => {
   const dispatch = useDispatch();
+  const todoActive = useSelector((state) =>
+  state?.todos?.todos?.filter((todo) => todo.completed === false)
+);
   const deleteTodo = async (todoId) => {
     await Swal.fire({
       title: "Etes-vous sûr?",
@@ -35,18 +38,14 @@ const Actif = (todoActive) => {
       }
     });
   };
-
-  const handleToogles = async (todoId) => {
-    console.log(todoId);
-    await updateDoc(doc(db, "todos", todoId), {
-      completed: !todoActive.completed,
-    })
-      .then(() => {
-        dispatch(handleToogle(todoId));
-      })
-      .catch((error) => {
-        console.log(error);
+  const handleToggle = async (item) => {
+    try {
+      await updateDoc(doc(db, `todos`, item.id), {
+        completed: !item.completed,
       });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -54,9 +53,9 @@ const Actif = (todoActive) => {
       {todoActive?.map((item, index) => {
         return (
           <>
-            <ListItem key={index}>
-              <ListItemText id="switch-list-label-wifi">
-                <Button
+           <ListItem key={index}>
+              <ListItemText id="switch-list-label-wifi" key={index} >
+                <Button key={index}
                   variant="outlined"
                   color={item?.completed ? "success" : "error"}
                 >
@@ -65,7 +64,7 @@ const Actif = (todoActive) => {
               </ListItemText>
               <Switch
                 edge="end"
-                onChange={() => handleToogles(item?.id)}
+                onChange={() => handleToggle(item)}
                 checked={item.completed}
                 inputProps={{
                   "aria-labelledby": "switch-list-label-wifi",
@@ -85,4 +84,4 @@ const Actif = (todoActive) => {
     </List>
   );
 };
-export default Actif;
+export default Active;

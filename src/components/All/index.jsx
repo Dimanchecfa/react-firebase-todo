@@ -6,14 +6,14 @@ import ListItemText from "@mui/material/ListItemText";
 import Switch from "@mui/material/Switch";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { deleteTodos } from "../../redux/slices/todoSlice";
 import { db } from "../../utils/firebase.config";
 
-export default function Tout({ todoData }) {
+export default function All() {
   const dispatch = useDispatch();
-
+  const todoData = useSelector((state) => state?.todos?.todos);
   const deleteTodo = async (todoId) => {
     await Swal.fire({
       title: "Etes-vous sûr?",
@@ -53,8 +53,8 @@ export default function Tout({ todoData }) {
         return (
           <>
             <ListItem key={index}>
-              <ListItemText id="switch-list-label-wifi">
-                <Button
+              <ListItemText id="switch-list-label-wifi" key={index} >
+                <Button key={index}
                   variant="outlined"
                   color={item?.completed ? "success" : "error"}
                 >

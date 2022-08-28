@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Layout from "../layouts";
-import Tout from "../pages/Tout";
+import Layout from "../pages/Main";
+import Tout from "../components/All";
 
 
 

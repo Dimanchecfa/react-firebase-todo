@@ -6,7 +6,9 @@ function App() {
     <>
       <Routes>
         <Route path="/*" element={<TodosRoute />}>
+
           {/* <Route path="/*" element={<TodosRoute />} /> */}
+
         </Route>
       </Routes>
     </>
