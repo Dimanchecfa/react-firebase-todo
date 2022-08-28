@@ -59,7 +59,7 @@ const Layout = () => {
         <div className="h-100 w-full flex items-center justify-center bg-teal-lightest font-sans ">
           <div className="bg-white rounded shadow p-6 m-4 w-2/4  ">
             <div className="mb-4">
-              <h1 className="text-xl">Mes taches</h1>
+              <h1 className="text-xl">Mes tâches</h1>
               <form className="flex flex-col" onSubmit={handleSubmit} id="form">
                 <div className="flex mt-4 justify-evenly ">
                   <Box
