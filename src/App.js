@@ -6,7 +6,7 @@ function App() {
     <>
       <Routes>
         <Route path="/*" element={<TodosRoute />}>
-         
+          {/* todos routes */}
         </Route>
       </Routes>
     </>
