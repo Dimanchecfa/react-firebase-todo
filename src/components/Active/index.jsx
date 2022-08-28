@@ -53,9 +53,9 @@ const Active = () => {
       {todoActive?.map((item, index) => {
         return (
           <>
-            <ListItem key={index}>
-              <ListItemText id="switch-list-label-wifi">
-                <Button
+           <ListItem key={index}>
+              <ListItemText id="switch-list-label-wifi" key={index} >
+                <Button key={index}
                   variant="outlined"
                   color={item?.completed ? "success" : "error"}
                 >
@@ -64,7 +64,7 @@ const Active = () => {
               </ListItemText>
               <Switch
                 edge="end"
-                onChange={() => handleToggle(item?.id)}
+                onChange={() => handleToggle(item)}
                 checked={item.completed}
                 inputProps={{
                   "aria-labelledby": "switch-list-label-wifi",

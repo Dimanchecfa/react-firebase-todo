@@ -8,12 +8,14 @@ import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
-import { deleteTodos} from "../../redux/slices/todoSlice";
+import { deleteTodos } from "../../redux/slices/todoSlice";
 import { db } from "../../utils/firebase.config";
 
 export default function Finished() {
   const dispatch = useDispatch();
-  const todoFinished = useSelector((state) => state.todos?.todos.filter((todo) => todo.completed === true));
+  const todoFinished = useSelector((state) =>
+    state.todos?.todos.filter((todo) => todo.completed === true)
+  );
 
   const deleteTodo = async (todoId) => {
     await Swal.fire({
@@ -53,8 +55,9 @@ export default function Finished() {
         return (
           <>
             <ListItem key={index}>
-              <ListItemText id="switch-list-label-wifi">
+              <ListItemText id="switch-list-label-wifi" key={index}>
                 <Button
+                  key={index}
                   variant="outlined"
                   color={item?.completed ? "success" : "error"}
                 >

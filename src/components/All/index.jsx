@@ -53,8 +53,8 @@ export default function All() {
         return (
           <>
             <ListItem key={index}>
-              <ListItemText id="switch-list-label-wifi">
-                <Button
+              <ListItemText id="switch-list-label-wifi" key={index} >
+                <Button key={index}
                   variant="outlined"
                   color={item?.completed ? "success" : "error"}
                 >
