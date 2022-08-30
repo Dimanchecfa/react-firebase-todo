@@ -1,4 +1,17 @@
 # [react-firebase-todo](https://react-firebase-todo-1ffa7.web.app/)
+
+## Steps 
+- [x] [Create a new project](https://fr.reactjs.org/docs/create-a-new-react-app.html)
+- [x] [Make a project view with material-ui](https://mui.com/material-ui/)
+- [x] Save todos in array
+- [x] Save todos in local storage
+- [x] Integrate a database [Firebase ](https://firebase.google.com/docs/firestore) or [MongoDB](https://www.mongodb.com/fr-fr)
+- [x] Hosting the project on [Firebase ](https://firebase.google.com/docs/hosting) or [Vercel](https://vercel.com/)
+
+
+
+
+
 ## Installation
 
 ```shell
